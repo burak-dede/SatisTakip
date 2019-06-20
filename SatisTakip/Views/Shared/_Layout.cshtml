@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ereltes - @ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Images/favicon.png")" rel="icon" type="image/png" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+
+<body>
+    <nav class="navbar navbar-fixed-top navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                    <span class="icon-bar" style="background-color:black"></span>
+                    <span class="icon-bar" style="background-color:black"></span>
+                    <span class="icon-bar" style="background-color:black"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img class="img-responsive center-block" src="@Url.Content("~/Content/Images/logo.png")" style="transform: translateY(-25%); " />
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="myNavbar">
+
+
+                <ul class="nav navbar-nav navbar-right text-center">
+                    @Html.Partial("_MenuPartial")
+                    @Html.Partial("_LoginPartial")
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container body-content">
+        <div id="category-logo-div">
+            <img src=@ViewBag.BodyLogoUrl />
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Ereltes - Burak Dede</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/datepicker")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

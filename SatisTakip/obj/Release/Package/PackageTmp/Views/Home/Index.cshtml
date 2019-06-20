@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Anasayfa";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<style type="text/css">
+    body {
+        background-image: url("/Content/Images/aracinizgozunuzonunde.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 0;
+        min-width: 0;
+        display: grid;
+        align-items: center;
+    }
+
+</style>
+<h3 class="text-center"  style="color:white"> Devam etmek için seçim yapınız</h3>
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.87);">
+
+        <div class="col-sm-2 col-md-3 col-lg-3"></div>
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3" style="padding: 25px 0; ">
+
+            <a href="/arventosale">
+                <img class="img-responsive center-block" src="@Url.Content("~/Content/Images/arventologo.png")" />
+            </a>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 " style="padding: 25px 0; ">
+
+            <a href="/turkcellsale">
+                <img class="img-responsive center-block" src="@Url.Content("~/Content/Images/turkcelllogo.png")" />
+            </a>
+        </div>
+
+        <div class="col-sm-2 col-md-3 col-lg-3"></div>
+    </div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+    </script>
+}

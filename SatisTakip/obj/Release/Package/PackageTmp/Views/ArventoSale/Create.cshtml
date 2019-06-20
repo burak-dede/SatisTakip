@@ -1,0 +1,154 @@
+﻿@model SatisTakip.Models.ArventoSale
+
+@{
+    ViewBag.Title = "Create";
+}
+<h2 class="text-center">Yeni Kayıt</h2>
+<div>
+
+    <hr />
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyName, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.CompanyName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CompanyName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Sales, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Sales, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Sales)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateofSale, new { @class = "control-label" })
+                    @Html.DatePickerFor(model => model.DateofSale, "format=dd.mm.yyyy")
+                    @Html.ValidationMessageFor(model => model.DateofSale)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndOfContractDate, new { @class = "control-label" })
+                    @Html.DatePickerFor(model => model.EndOfContractDate, "format=dd.mm.yyyy")
+                    @Html.ValidationMessageFor(model => model.EndOfContractDate)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IsMobileDataOwn, new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.IsMobileDataOwn, new List<SelectListItem>
+           { new SelectListItem{Text="Evet", Value="True",Selected=true},
+             new SelectListItem{Text="Hayır", Value="False"}}, "Birini Seçiniz", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IsMobileDataOwn)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.MobileDate, new { @class = "control-label" })
+                    @Html.DatePickerFor(model => model.MobileDate, "format=dd.mm.yyyy")
+                    @Html.ValidationMessageFor(model => model.MobileDate)
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RemindingType, new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.RemindingType, new List<SelectListItem>
+           { new SelectListItem{Text="Önce", Value="True",Selected=true},
+             new SelectListItem{Text="Zamanında", Value="False"}}, "Birini Seçiniz", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RemindingType)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RemindingTime, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.RemindingTime, new { @Value = 7, @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RemindingTime)
+
+
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Oluştur" class="form-control" />
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Listeye Dön", "Index")
+</div>
+@Scripts.Render("~/bundles/jqueryval")
+
+@section Scripts {
+    <script>
+
+        jQuery.validator.addMethod("tarih", {
+
+            range: function (value, element, param) {
+
+                var val = Globalize.parseFloat(value);
+
+                return this.optional(element) || (
+
+                    val >= param[0] && val <= param[1]);
+
+            }
+
+        }, 'Please enter a valid date.');
+
+        $.validator.methods.date = function (value, element) {
+
+            return this.optional(element) ||
+
+                Globalize.parseDate(value) ||
+
+                Globalize.parseDate(value, "dd/MM/yyyy");
+
+        }
+
+        $(function () {
+            var date = $('#DateofSale').datepicker({
+                dateFormat: 'dd-mm-yyyy'
+            }).val();
+            var date2 = $('#endOfContractDate').datepicker({
+                dateFormat: 'dd-mm-yyyy'
+            }).val();
+            $("#DateofSale").datepicker();
+            $("#EndOfContractDate").datepicker();
+            $("#DateofSale").datepicker().datepicker("setDate", new Date());
+            var date3 = $('#DateofSale').datepicker('getDate');
+            date3.setDate(date3.getDate() + 365);
+            $('#EndOfContractDate').datepicker('setDate', date3);
+        });
+
+        function RemindingTypeCheck() {
+
+            var singleValues = $("#RemindingType").val();
+
+            if (singleValues == "False") {
+                $("#RemindingTime").val(0);
+                $("#RemindingTime").prop('disabled', true);
+            } else {
+                $("#RemindingTime").val(7);
+                $("#RemindingTime").prop('disabled', false);
+            }
+        };
+
+
+        function MobilDataTypeCheck() {
+
+            var IsMobileDataOwn = $("#IsMobileDataOwn").val();
+
+            if (IsMobileDataOwn == "False") {
+                $("#MobileDate").val($('#DateofSale').val())
+                $("#MobileDate").prop('disabled', true);
+            } else {
+                $("#MobileDate").prop('disabled', false);
+            }
+        };
+
+
+        $("#RemindingType").change(RemindingTypeCheck);
+        $("#IsMobileDataOwn").change(MobilDataTypeCheck);
+        RemindingTypeCheck();
+        MobilDataTypeCheck();
+    </script>
+}

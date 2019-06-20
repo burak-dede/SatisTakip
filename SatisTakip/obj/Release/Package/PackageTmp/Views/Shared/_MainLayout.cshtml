@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Ereltes - @ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/Images/favicon.png")" rel="icon" type="image/png" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto&amp;subset=latin-ext" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+
+<body>
+    <div class="container body-content">
+        @RenderBody()
+        <footer style=" position: absolute; bottom: 0;">
+            <hr />
+            <p>&copy; @DateTime.Now.Year - Ereltes - Burak Dede</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/datepicker")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

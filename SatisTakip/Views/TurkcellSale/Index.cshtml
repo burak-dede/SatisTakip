@@ -1,0 +1,447 @@
+﻿@model SatisTakip.Models.TurkcellListsModel
+
+@using PagedList.Mvc;
+
+
+
+<div class="row body-content">
+
+    <div class="col-sm-push-5">
+        @using (Html.BeginForm())
+        {
+            <table align="right">
+                <tr>
+                    <td>
+                        @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                    </td>
+                    <td>
+                        <input class="form-control" type="submit" value="Ara" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <div class="col-sm-pull-7">
+        <ul class="nav nav-tabs">
+            <li role="presentation" id="hepsitab"><a href="#hepsi" data-toggle="tab">Hepsi</a></li>
+            <li role="presentation" id="faturalitab"><a href="#faturali" data-toggle="tab">Faturalı</a></li>
+            <li role="presentation" id="faturasiztab"><a href="#faturasiz" data-toggle="tab">Faturasız</a></li>
+            <li role="presentation"><a href="@Url.Action("Create", "TurkcellSale")" style="color: white; background-color: #5e97f2; font-weight: bold;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ekle</a> </li>
+
+        </ul>
+    </div>
+
+</div>
+
+
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade" id="hepsi">
+        <div class="table-responsive">
+            <table class="table">
+
+                <tr style="color: #5e97f2">
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Name).ToHtmlString(), "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter ,tabIndex=1})
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().LineType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerType)
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ActivationDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.ActiveDateParm, currentFilter = ViewBag.CurrentFilter ,tabIndex=1})
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ContactNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults1)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @{if (item.LineType)
+                            {
+                                ViewBag.secim = "Faturalı";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Faturasız";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.CustomerType)
+                            {
+                                ViewBag.secim = "Yeni";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Taşınma";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @{if ((item.CustomerState != null) ? (item.CustomerState == true) : false)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                              else if ((item.CustomerState != null) ? (item.CustomerState == false) : false)
+                            {
+                                  ViewBag.durum = "<b style='color:red'>Pasif</b>";
+                            }
+                              else
+                              {
+                                  ViewBag.durum = "---";
+                              }
+                            }
+                            @Html.Raw(ViewBag.durum)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        Sayfa @(Model.SearchResults1.PageCount < Model.SearchResults1Page ? 0 : Model.SearchResults1Page) / @Model.SearchResults1.PageCount
+
+        @Html.PagedListPager(Model.SearchResults1, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 1 }))
+
+
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="faturali">
+        <div class="table-responsive">
+            <table class="table">
+
+                <tr style="color: #5e97f2">
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Name).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter, tabIndex = 2})
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().LineType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerType)
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ActivationDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter, tabIndex = 2 })
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ContactNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults2)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @{if (item.LineType)
+                            {
+                                ViewBag.secim = "Faturalı";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Faturasız";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.CustomerType)
+                            {
+                                ViewBag.secim = "Yeni";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Taşınma";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>                            
+                            @{if ((item.CustomerState != null) ? (item.CustomerState == true) : false)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else if ((item.CustomerState != null) ? (item.CustomerState == false) : false)
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            else
+                            {
+                                ViewBag.durum = "---";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        Sayfa @(Model.SearchResults2.PageCount < Model.SearchResults2Page ? 0 : Model.SearchResults2Page) / @Model.SearchResults2.PageCount
+
+        @Html.PagedListPager(Model.SearchResults2, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 2 }))
+
+
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="faturasiz">
+        <div class="table-responsive">
+            <table class="table">
+
+                <tr style="color: #5e97f2">
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Name).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter ,tabIndex=3})
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Lastname)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().LineType)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerType)
+                    </th>
+                    <th>
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ActivationDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter ,tabIndex=3})
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().ContactNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Note)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults3)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Lastname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @{if (item.LineType)
+                            {
+                                ViewBag.secim = "Faturalı";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Faturasız";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.CustomerType)
+                            {
+                                ViewBag.secim = "Yeni";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Taşınma";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ActivationDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
+                        <td>
+                            @{if ((item.CustomerState != null) ? (item.CustomerState == true) : false)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else if ((item.CustomerState != null) ? (item.CustomerState == false) : false)
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            else
+                            {
+                                ViewBag.durum = "---";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        Sayfa @(Model.SearchResults3.PageCount < Model.SearchResults3Page ? 0 : Model.SearchResults3Page) / @Model.SearchResults3.PageCount
+
+        @Html.PagedListPager(Model.SearchResults3, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 3 }))
+
+
+
+    </div>
+
+
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? 'undefined' : sParameterName[1];
+                }
+            }
+        };
+
+        function tab() {
+            var index = getUrlParameter('tabIndex');
+
+            if (index != 'undefined') {
+                switch (index) {
+                    case "1":
+                        activaTab('hepsitab');
+                        break;
+                    case "2":
+                        activaTab('faturalitab');
+                        break;
+                    case "3":
+                        activaTab('faturasiztab');
+                        break;
+                    default:
+                        activaTab('hepsitab');
+                        break;
+                };
+            }
+        }
+
+        function activaTab(tab) {
+            var tab2 = tab.split('tab');
+            $('.nav-tabs a[href="#' + tab2[0] + '"]').tab('show');
+            $('#' + tab).addClass('active');
+        };
+
+        $(document).ready(function () {
+            tab();
+        })
+
+    </script>
+
+}

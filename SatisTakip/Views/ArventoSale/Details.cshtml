@@ -1,0 +1,225 @@
+﻿@model SatisTakip.Models.ArventoSale
+
+
+<div class="container">
+
+    <h2 style="text-align:center">DETAY</h2>
+    <hr />
+    <div class="row">
+        @{
+            if (Model.InvoiceImagePath != null)
+            {
+
+                <div class="col-xs-6 col-xs-offset-3 col-sm-4 col-sm-offset-2 col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-2">
+
+                    <dl class="details">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CompanyName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Sales)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Sales)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DateofSale)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DateofSale)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.EndOfContractDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.EndOfContractDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IsMobileDataOwn)
+                        </dt>
+
+                        <dd>
+                            @{
+                                if (Model.IsMobileDataOwn)
+                                {
+                                    ViewBag.secim = "Evet";
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "Hayır";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.MobileDate)
+                        </dt>
+
+                        <dd>
+                            @{
+                                if (Model.IsMobileDataOwn)
+                                {
+                                    ViewBag.secim = Model.MobileDate;
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "---";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RemindingTime)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.RemindingTime)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CustomerState)
+                        </dt>
+
+                        <dd>
+                            @{if (Model.CustomerState)
+                                {
+                                    ViewBag.secim = "Aktif";
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "Pasif";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+                        <dd class="page-navigate">
+                            <p>
+                                @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+                                @Html.ActionLink("Listeye Geri Dön", "Index")
+                            </p>
+                        </dd>
+                    </dl>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
+                    <img class="fatura" src="@Url.Content(Model.InvoiceImagePath)" />
+
+                </div>
+            }
+            else
+            {
+                <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
+
+                    <dl class="details">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CompanyName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.CompanyName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.Sales)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.Sales)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.DateofSale)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.DateofSale)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.EndOfContractDate)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.EndOfContractDate)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.IsMobileDataOwn)
+                        </dt>
+
+                        <dd>
+                            @{
+                                if (Model.IsMobileDataOwn)
+                                {
+                                    ViewBag.secim = "Evet";
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "Hayır";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.MobileDate)
+                        </dt>
+
+                        <dd>
+                            @{
+                                if (Model.IsMobileDataOwn)
+                                {
+                                    ViewBag.secim = Model.MobileDate;
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "---";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.RemindingTime)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.RemindingTime)
+                        </dd>
+                        <dt>
+                            @Html.DisplayNameFor(model => model.CustomerState)
+                        </dt>
+
+                        <dd>
+                            @{if (Model.CustomerState)
+                                {
+                                    ViewBag.secim = "Aktif";
+                                }
+                                else
+                                {
+                                    ViewBag.secim = "Pasif";
+                                }
+                            }
+                            @ViewBag.secim
+                        </dd>
+                        <dd class="page-navigate">
+                            <p>
+                                @Html.ActionLink("Düzenle", "Edit", new { id = Model.Id }) |
+                                @Html.ActionLink("Listeye Geri Dön", "Index")
+                            </p>
+                        </dd>
+                    </dl>
+                </div>
+            }
+        }
+
+    </div>
+</div>

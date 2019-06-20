@@ -1,0 +1,588 @@
+﻿@model SatisTakip.Models.ListsModel
+
+@using PagedList.Mvc;
+
+
+<div class="row" style="margin: 0;">
+    @using (Html.BeginForm())
+    {
+        <table align="right">
+            <tr>
+                <td>
+                    @Html.TextBox("SearchString", null, new { @class = "form-control" })
+                </td>
+                <td>
+                    <input class="form-control" type="submit" value="Ara" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+
+<div class="row" style="margin: 0;">
+
+    <ul class="nav nav-tabs">
+        <li role="presentation" id="hepsitab"><a href="#hepsi" data-toggle="tab">Hepsi</a></li>
+        <li role="presentation" id="devamtab"><a href="#devam" data-toggle="tab">Devam</a></li>
+        <li role="presentation" id="yakintab"><a href="#yakin" data-toggle="tab">Yakın</a></li>
+        <li role="presentation" id="bitentab"><a href="#biten" data-toggle="tab">Biten</a></li>
+        <li role="presentation"><a href="@Url.Action("Create", "ArventoSale")" style="color: white; background-color: #5e97f2; font-weight: bold;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ekle</a> </li>
+
+    </ul>
+
+</div>
+
+
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade" id="hepsi">
+        <div class="table-responsive">
+            <table class="table">
+                <tr style="color: #5e97f2">
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CompanyName).ToHtmlString(), "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Sales)
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().DateofSale).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().EndOfContractDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().IsMobileDataOwn)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().MobileDate)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingType)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingTime)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults1)
+                {
+                    <tr>
+                        <td style="font-weight:bold">
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateofSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndOfContractDate)
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = "Evet";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Hayır";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = Html.DisplayFor(modelItem => item.MobileDate);
+                            }
+                            else
+                            {
+                                ViewBag.secim = "---";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.RemindingType)
+                            {
+                                ViewBag.secim = "Önce";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Zamanında";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemindingTime)
+                        </td>
+                        <td>
+                            @{if (item.CustomerState)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        Sayfa @(Model.SearchResults1.PageCount < Model.SearchResults1Page ? 0 : Model.SearchResults1Page) / @Model.SearchResults1.PageCount
+
+        @Html.PagedListPager(Model.SearchResults1, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 1 }))
+
+
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="devam">
+        <div class="table-responsive">
+            <table class="table">
+                <tr style="color: #5e97f2">
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CompanyName).ToHtmlString(), "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Sales)
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().DateofSale).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().EndOfContractDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().IsMobileDataOwn)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().MobileDate)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingType)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingTime)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults2)
+                {
+                    <tr>
+                        <td style="font-weight:bold">
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateofSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndOfContractDate)
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = "Evet";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Hayır";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = Html.DisplayFor(modelItem => item.MobileDate);
+                            }
+                            else
+                            {
+                                ViewBag.secim = "---";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.RemindingType)
+                            {
+                                ViewBag.secim = "Önce";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Zamanında";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemindingTime)
+                        </td>
+                        <td>
+                            @{if (item.CustomerState)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+
+        </div>
+        Sayfa @(Model.SearchResults2.PageCount < Model.SearchResults2Page ? 0 : Model.SearchResults2Page) / @Model.SearchResults2.PageCount
+
+        @Html.PagedListPager(Model.SearchResults2, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 2 }))
+
+
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="yakin">
+        <div class="table-responsive">
+            <table class="table">
+                <tr style="color: #5e97f2">
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CompanyName).ToHtmlString(), "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Sales)
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().DateofSale).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().EndOfContractDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().IsMobileDataOwn)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().MobileDate)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingType)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingTime)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults3)
+                {
+                    <tr>
+                        <td style="font-weight:bold">
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateofSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndOfContractDate)
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = "Evet";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Hayır";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = Html.DisplayFor(modelItem => item.MobileDate);
+                            }
+                            else
+                            {
+                                ViewBag.secim = "---";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.RemindingType)
+                            {
+                                ViewBag.secim = "Önce";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Zamanında";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemindingTime)
+                        </td>
+                        <td>
+                            @{if (item.CustomerState)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        Sayfa @(Model.SearchResults3.PageCount < Model.SearchResults3Page ? 0 : Model.SearchResults3Page) / @Model.SearchResults3.PageCount
+
+        @Html.PagedListPager(Model.SearchResults3, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 3 }))
+
+
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="biten">
+        <div class="table-responsive">
+            <table class="table">
+                <tr style="color: #5e97f2">
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CompanyName).ToHtmlString(), "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().Sales)
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().DateofSale).ToHtmlString(), "Index", new { sortOrder = ViewBag.SaleDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.ActionLink(@Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().EndOfContractDate).ToHtmlString(), "Index", new { sortOrder = ViewBag.EndDateSortParm, currentFilter = ViewBag.CurrentFilter })
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().IsMobileDataOwn)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().MobileDate)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingType)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().RemindingTime)
+                    </th>
+                    <th scope="col">
+                        @Html.DisplayNameFor(model => model.SearchResults1.FirstOrDefault().CustomerState)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model.SearchResults4)
+                {
+                    <tr>
+                        <td style="font-weight:bold">
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sales)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateofSale)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EndOfContractDate)
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = "Evet";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Hayır";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.IsMobileDataOwn)
+                            {
+                                ViewBag.secim = Html.DisplayFor(modelItem => item.MobileDate);
+                            }
+                            else
+                            {
+                                ViewBag.secim = "---";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @{if (item.RemindingType)
+                            {
+                                ViewBag.secim = "Önce";
+                            }
+                            else
+                            {
+                                ViewBag.secim = "Zamanında";
+                            }
+
+                            }
+                            @ViewBag.secim
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RemindingTime)
+                        </td>
+                        <td>
+                            @{if (item.CustomerState)
+                            {
+
+                                ViewBag.durum = "Aktif";
+
+                            }
+                            else
+                            {
+                                ViewBag.durum = "Pasif";
+                            }
+                            }
+                            @ViewBag.durum
+                        </td>
+                        <td>
+                            @Html.ActionLink("Düzenle", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Detay", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Sil", "Delete", new { id = item.Id })
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+        Sayfa @(Model.SearchResults4.PageCount < Model.SearchResults4Page ? 0 : Model.SearchResults4Page) / @Model.SearchResults4.PageCount
+
+        @Html.PagedListPager(Model.SearchResults4, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter, tabIndex = 4 }))
+
+
+
+    </div>
+
+</div>
+
+@section Scripts{
+
+    <script type="text/javascript">
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? 'undefined' : sParameterName[1];
+                }
+            }
+        };
+
+        function tab() {
+            var index = getUrlParameter('tabIndex');
+
+            if (index != 'undefined') {
+                switch (index) {
+                    case "1":
+                        activaTab('hepsitab');
+                        break;
+                    case "2":
+                        activaTab('devamtab');
+                        break;
+                    case "3":
+                        activaTab('yakintab');
+                        break;
+                    case "4":
+                        activaTab('bitentab');
+                        break;
+                    default:
+                        activaTab('hepsitab');
+                        break;
+                };
+            }
+        }
+
+        function activaTab(tab) {
+            var tab2 = tab.split('tab');
+            $('.nav-tabs a[href="#' + tab2[0] + '"]').tab('show');
+            $('#' + tab).addClass('active');
+        };
+
+        $(document).ready(function () {
+            tab();
+        })
+
+    </script>
+
+
+
+
+}
