@@ -109,10 +109,10 @@ namespace SatisTakip.Controllers
                     body = body + "</table>";
                 }
                 var message = new MailMessage();
-                message.To.Add(new MailAddress("burakdede0214@gmail.com"));  // replace with valid value 
-                message.From = new MailAddress("duyuru@ereltes.xyz", "Ereltes - Bildirim");  // replace with valid value
-                message.Subject = "Süresi Dolacaklar - Ereltes Bildirim";
-                //message.Body = string.Format(body, "burak", "burak@mail.com", "denemedeneme");
+                message.To.Add(new MailAddress("myemailadress@gmail.com"));  // replace with valid value 
+                message.From = new MailAddress("duyuru@companydomain.xyz", "My Company - Bildirim");  // replace with valid value
+                message.Subject = "Süresi Dolacaklar - My Company Bildirim";
+                //message.Body = string.Format(body, "burak", "myemailadress@mail.com", "test");
                 message.Body = body;
                 message.IsBodyHtml = true;
 
