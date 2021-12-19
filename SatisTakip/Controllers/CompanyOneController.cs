@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
@@ -9,12 +8,10 @@ using System.Web.Mvc;
 using SatisTakip.Models;
 using SatisTakip.DAL;
 using PagedList;
-using System.IO;
-using System.Web.UI.WebControls;
 
 namespace SatisTakip.Controllers
 {
-    public class ArventoSaleController : Controller
+    public class CompanyOneSaleController : Controller
     {
 
         private SaleContext db = new SaleContext();
@@ -22,7 +19,7 @@ namespace SatisTakip.Controllers
         [Authorize]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? tabIndex)
         {
-            @ViewBag.Title = "Arvento";
+            @ViewBag.Title = "CompanyOne";
 
 
             ViewBag.CurrentSort = sortOrder;
@@ -73,7 +70,7 @@ namespace SatisTakip.Controllers
             }
 
 
-            IQueryable<ArventoSale> sales;
+            IQueryable<CompanyOneSale> sales;
             if (!String.IsNullOrEmpty(searchString))
             {
                 sales = db.Sales.Where(s => s.CompanyName.Contains(searchString));
@@ -117,18 +114,18 @@ namespace SatisTakip.Controllers
 
 
 
-            IQueryable<ArventoSale> saleDevam = sales.Where(s => s.CustomerState.Equals(true));
+            IQueryable<CompanyOneSale> saleDevam = sales.Where(s => s.CustomerState.Equals(true));
 
             DateTime thisDate = DateTime.Today;
-            IQueryable<ArventoSale> saleYakin = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 30) && (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) > 0));
-            IQueryable<ArventoSale> saleBiten = sales.Where(s => s.CustomerState.Equals(false));
+            IQueryable<CompanyOneSale> saleYakin = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 30) && (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) > 0));
+            IQueryable<CompanyOneSale> saleBiten = sales.Where(s => s.CustomerState.Equals(false));
 
             lists.SearchResults2 = saleDevam.ToPagedList(lists.SearchResults2Page, pageSize);
             lists.SearchResults3 = saleYakin.ToPagedList(lists.SearchResults3Page, pageSize);
             lists.SearchResults4 = saleBiten.ToPagedList(lists.SearchResults4Page, pageSize);
 
 
-            ViewBag.BodyLogoUrl = "/Content/Images/arventologo.png";
+            ViewBag.BodyLogoUrl = "/Content/Images/CompanyOnelogo.png";
 
 
             return View(lists);
@@ -140,14 +137,14 @@ namespace SatisTakip.Controllers
         [Authorize]
         public ActionResult Details(int? id)
         {
-            ViewBag.Title = "Arvento";
+            ViewBag.Title = "CompanyOne";
             ViewBag.Category = "Detay";
-            ViewBag.BodyLogoUrl = "/Content/Images/arventologo.png";
+            ViewBag.BodyLogoUrl = "/Content/Images/CompanyOnelogo.png";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ArventoSale sale = db.Sales.Find(id);
+            CompanyOneSale sale = db.Sales.Find(id);
             if (sale == null)
             {
                 return HttpNotFound();
@@ -161,9 +158,9 @@ namespace SatisTakip.Controllers
         public ActionResult Create()
         {
 
-            ViewBag.Title = "Arvento";
+            ViewBag.Title = "CompanyOne";
             ViewBag.Category = "Yeni";
-            ViewBag.BodyLogoUrl = "../../Content/Images/arventologo.png";
+            ViewBag.BodyLogoUrl = "../../Content/Images/CompanyOnelogo.png";
             //ViewBag.selectMobileList = getMobileList();
 
             return View();
@@ -175,7 +172,7 @@ namespace SatisTakip.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "Id,CompanyName,Sales,DateofSale,EndOfContractDate,IsMobileDataOwn,MobileDate,RemindingTime")] ArventoSale sale, HttpPostedFileBase file)
+        public ActionResult Create([Bind(Include = "Id,CompanyName,Sales,DateofSale,EndOfContractDate,IsMobileDataOwn,MobileDate,RemindingTime")] CompanyOneSale sale, HttpPostedFileBase file)
         {
 
             String fileName = "";
@@ -224,14 +221,14 @@ namespace SatisTakip.Controllers
         public ActionResult Edit(int? id)
         {
 
-            ViewBag.Title = "Arvento";
+            ViewBag.Title = "CompanyOne";
             ViewBag.Category = "Düzenle";
-            ViewBag.BodyLogoUrl = "../../Content/Images/arventologo.png";
+            ViewBag.BodyLogoUrl = "../../Content/Images/CompanyOnelogo.png";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ArventoSale sale = db.Sales.Find(id);
+            CompanyOneSale sale = db.Sales.Find(id);
             if (sale == null)
             {
                 return HttpNotFound();
@@ -245,7 +242,7 @@ namespace SatisTakip.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,CompanyName,Sales,DateofSale,EndOfContractDate,IsMobileDataOwn,MobileDate,RemindingTime,CustomerState,InvoiceImagePath")] ArventoSale sale, HttpPostedFileBase file)
+        public ActionResult Edit([Bind(Include = "Id,CompanyName,Sales,DateofSale,EndOfContractDate,IsMobileDataOwn,MobileDate,RemindingTime,CustomerState,InvoiceImagePath")] CompanyOneSale sale, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -287,14 +284,14 @@ namespace SatisTakip.Controllers
         public ActionResult Delete(int? id)
         {
 
-            ViewBag.Title = "Arvento";
+            ViewBag.Title = "CompanyOne";
             ViewBag.Category = "Sil";
-            ViewBag.BodyLogoUrl = "../../Content/Images/arventologo.png";
+            ViewBag.BodyLogoUrl = "../../Content/Images/CompanyOnelogo.png";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ArventoSale sale = db.Sales.Find(id);
+            CompanyOneSale sale = db.Sales.Find(id);
             if (sale == null)
             {
                 return HttpNotFound();
@@ -308,7 +305,7 @@ namespace SatisTakip.Controllers
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
-            ArventoSale sale = db.Sales.Find(id);
+            CompanyOneSale sale = db.Sales.Find(id);
             db.Sales.Remove(sale);
             db.SaveChanges();
             return RedirectToAction("Index");

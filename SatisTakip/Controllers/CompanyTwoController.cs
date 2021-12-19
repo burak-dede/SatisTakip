@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using SatisTakip.Models;
 using SatisTakip.DAL;
@@ -12,19 +10,19 @@ using PagedList;
 
 namespace SatisTakip.Controllers
 {
-    public class TurkcellSaleController : Controller
+    public class CompanyTwoSaleController : Controller
     {
         private SaleContext db = new SaleContext();
 
 
-        // GET: /TurkcellSale/
+        // GET: /CompanyTwoSale/
 
         [Authorize]
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, int? tabIndex)
         {
 
-            @ViewBag.Title = "Turkcell";
-            @ViewBag.BodyLogoUrl = "/Content/Images/turkcelllogo.png";
+            @ViewBag.Title = "CompanyTwo";
+            @ViewBag.BodyLogoUrl = "/Content/Images/CompanyTwologo.png";
 
             ViewBag.CurrentSort = sortOrder;
 
@@ -44,7 +42,7 @@ namespace SatisTakip.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            TurkcellListsModel lists = new TurkcellListsModel();
+            CompanyTwoListsModel lists = new CompanyTwoListsModel();
 
             int pageSize = 20;
 
@@ -69,14 +67,14 @@ namespace SatisTakip.Controllers
             }
 
 
-            IQueryable<TurkcellSale> sales;
+            IQueryable<CompanyTwoSale> sales;
             if (!String.IsNullOrEmpty(searchString))
             {
-                sales = db.TurkcellSales.Where(s => s.Name.Contains(searchString));
+                sales = db.CompanyTwoSales.Where(s => s.Name.Contains(searchString));
             }
             else
             {
-                sales = from s in db.TurkcellSales select s;
+                sales = from s in db.CompanyTwoSales select s;
             }
 
             switch (sortOrder)
@@ -104,8 +102,8 @@ namespace SatisTakip.Controllers
             }
 
 
-            IQueryable<TurkcellSale> Faturali = sales.Where(s => s.LineType.Equals(true) && s.CustomerState.Equals(true));
-            IQueryable<TurkcellSale> Faturasiz = sales.Where(s => s.LineType.Equals(false) && s.CustomerState.Equals(true));
+            IQueryable<CompanyTwoSale> Faturali = sales.Where(s => s.LineType.Equals(true) && s.CustomerState.Equals(true));
+            IQueryable<CompanyTwoSale> Faturasiz = sales.Where(s => s.LineType.Equals(false) && s.CustomerState.Equals(true));
 
             lists.SearchResults2 = Faturali.ToPagedList(lists.SearchResults2Page, pageSize);
             lists.SearchResults3 = Faturasiz.ToPagedList(lists.SearchResults3Page, pageSize);
@@ -114,118 +112,118 @@ namespace SatisTakip.Controllers
 
         }
 
-        // GET: /TurkcellSale/Details/5
+        // GET: /CompanyTwoSale/Details/5
 
         [Authorize]
         public ActionResult Details(int? id)
         {
             
-            @ViewBag.Title = "Turkcell";
-            @ViewBag.BodyLogoUrl = "/Content/Images/turkcelllogo.png";
+            @ViewBag.Title = "CompanyTwo";
+            @ViewBag.BodyLogoUrl = "/Content/Images/CompanyTwologo.png";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TurkcellSale turkcellsale = db.TurkcellSales.Find(id);
-            if (turkcellsale == null)
+            CompanyTwoSale CompanyTwosale = db.CompanyTwoSales.Find(id);
+            if (CompanyTwosale == null)
             {
                 return HttpNotFound();
             }
-            return View(turkcellsale);
+            return View(CompanyTwosale);
         }
 
         [Authorize]
-        // GET: /TurkcellSale/Create
+        // GET: /CompanyTwoSale/Create
         public ActionResult Create()
         {
-            @ViewBag.Title = "Turkcell";
-            @ViewBag.BodyLogoUrl = "/Content/Images/turkcelllogo.png";
+            @ViewBag.Title = "CompanyTwo";
+            @ViewBag.BodyLogoUrl = "/Content/Images/CompanyTwologo.png";
 
             return View();
         }
 
-        // POST: /TurkcellSale/Create
+        // POST: /CompanyTwoSale/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include="Id,Name,Lastname,PhoneNumber,LineType,CustomerType,ActivationDate,ContactNumber,Note,CustomerState")] TurkcellSale turkcellsale)
+        public ActionResult Create([Bind(Include="Id,Name,Lastname,PhoneNumber,LineType,CustomerType,ActivationDate,ContactNumber,Note,CustomerState")] CompanyTwoSale CompanyTwosale)
         {
             if (ModelState.IsValid)
             {
-                db.TurkcellSales.Add(turkcellsale);
+                db.CompanyTwoSales.Add(CompanyTwosale);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(turkcellsale);
+            return View(CompanyTwosale);
         }
 
         [Authorize]
-        // GET: /TurkcellSale/Edit/5
+        // GET: /CompanyTwoSale/Edit/5
         public ActionResult Edit(int? id)
         {
-            @ViewBag.Title = "Turkcell";
-            @ViewBag.BodyLogoUrl = "/Content/Images/turkcelllogo.png";
+            @ViewBag.Title = "CompanyTwo";
+            @ViewBag.BodyLogoUrl = "/Content/Images/CompanyTwologo.png";
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TurkcellSale turkcellsale = db.TurkcellSales.Find(id);
-            if (turkcellsale == null)
+            CompanyTwoSale CompanyTwosale = db.CompanyTwoSales.Find(id);
+            if (CompanyTwosale == null)
             {
                 return HttpNotFound();
             }
-            return View(turkcellsale);
+            return View(CompanyTwosale);
         }
 
-        // POST: /TurkcellSale/Edit/5
+        // POST: /CompanyTwoSale/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include="Id,Name,Lastname,PhoneNumber,LineType,CustomerType,ActivationDate,ContactNumber,Note,CustomerState")] TurkcellSale turkcellsale)
+        public ActionResult Edit([Bind(Include="Id,Name,Lastname,PhoneNumber,LineType,CustomerType,ActivationDate,ContactNumber,Note,CustomerState")] CompanyTwoSale CompanyTwosale)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(turkcellsale).State = EntityState.Modified;
+                db.Entry(CompanyTwosale).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(turkcellsale);
+            return View(CompanyTwosale);
         }
 
-        // GET: /TurkcellSale/Delete/5
+        // GET: /CompanyTwoSale/Delete/5
 
         [Authorize]
         public ActionResult Delete(int? id)
         {
-            @ViewBag.Title = "Turkcell";
-            @ViewBag.BodyLogoUrl = "/Content/Images/turkcelllogo.png";
+            @ViewBag.Title = "CompanyTwo";
+            @ViewBag.BodyLogoUrl = "/Content/Images/CompanyTwologo.png";
 
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            TurkcellSale turkcellsale = db.TurkcellSales.Find(id);
-            if (turkcellsale == null)
+            CompanyTwoSale CompanyTwosale = db.CompanyTwoSales.Find(id);
+            if (CompanyTwosale == null)
             {
                 return HttpNotFound();
             }
-            return View(turkcellsale);
+            return View(CompanyTwosale);
         }
 
-        // POST: /TurkcellSale/Delete/5
+        // POST: /CompanyTwoSale/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
-            TurkcellSale turkcellsale = db.TurkcellSales.Find(id);
-            db.TurkcellSales.Remove(turkcellsale);
+            CompanyTwoSale CompanyTwosale = db.CompanyTwoSales.Find(id);
+            db.CompanyTwoSales.Remove(CompanyTwosale);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

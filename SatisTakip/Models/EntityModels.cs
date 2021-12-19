@@ -1,18 +1,14 @@
 ﻿using PagedList;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace SatisTakip.Models
 {
 
-    public class ArventoSale
+    public class CompanyOneSale
     {
-            public ArventoSale()
+            public CompanyOneSale()
         {
             CustomerState = true;
 
@@ -126,9 +122,9 @@ namespace SatisTakip.Models
             set { _CustomerState = value; }
         }
     }
-    public class TurkcellSale
+    public class CompanyTwoSale
     {
-        public TurkcellSale()
+        public CompanyTwoSale()
         {
             CustomerState = true;
 
@@ -245,20 +241,20 @@ namespace SatisTakip.Models
         public int SearchResults2Page { get; set; }
         public int SearchResults3Page { get; set; }
         public int SearchResults4Page { get; set; }
-        public IPagedList<ArventoSale> SearchResults1 { get; set; }
-        public IPagedList<ArventoSale> SearchResults2 { get; set; }
-        public IPagedList<ArventoSale> SearchResults3 { get; set; }
-        public IPagedList<ArventoSale> SearchResults4 { get; set; }
+        public IPagedList<CompanyOneSale> SearchResults1 { get; set; }
+        public IPagedList<CompanyOneSale> SearchResults2 { get; set; }
+        public IPagedList<CompanyOneSale> SearchResults3 { get; set; }
+        public IPagedList<CompanyOneSale> SearchResults4 { get; set; }
     }
-    public class TurkcellListsModel
+    public class CompanyTwoListsModel
     {
         //Search results
         public int SearchResults1Page { get; set; }
         public int SearchResults2Page { get; set; }
         public int SearchResults3Page { get; set; }
-        public IPagedList<TurkcellSale> SearchResults1 { get; set; }
-        public IPagedList<TurkcellSale> SearchResults2 { get; set; }
-        public IPagedList<TurkcellSale> SearchResults3 { get; set; }
+        public IPagedList<CompanyTwoSale> SearchResults1 { get; set; }
+        public IPagedList<CompanyTwoSale> SearchResults2 { get; set; }
+        public IPagedList<CompanyTwoSale> SearchResults3 { get; set; }
     }
 
     public class logMail

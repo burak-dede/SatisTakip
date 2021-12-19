@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Net;
-using System.Net.Mail;
-using System.Web.Hosting;
-using SatisTakip.DAL;
-using SatisTakip.Models;
-using System.Data.Entity;
-using PagedList;
+﻿using System.Web.Mvc;
 namespace SatisTakip.Controllers
 {
     public class HomeController : Controller
@@ -54,15 +43,15 @@ namespace SatisTakip.Controllers
             logMail newMailLog = new logMail();
             string mailmessage="";
 
-            IQueryable<ArventoSale> sales;
+            IQueryable<CompanyOne> sales;
             sales = from s in db.Sales select s;
 
-            IQueryable<ArventoSale> saleYakin = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 7) && (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) > 0) && s.CustomerState == true);
-            List<ArventoSale> listYakin = saleYakin.ToList<ArventoSale>();
-            IQueryable<ArventoSale> saleBiten = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 0) && s.CustomerState == true);
-            List<ArventoSale> listBiten = saleBiten.ToList<ArventoSale>();
+            IQueryable<CompanyOne> saleYakin = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 7) && (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) > 0) && s.CustomerState == true);
+            List<CompanyOne> listYakin = saleYakin.ToList<CompanyOne>();
+            IQueryable<CompanyOne> saleBiten = sales.Where(s => (DbFunctions.DiffDays(DateTime.Today, s.EndOfContractDate) <= 0) && s.CustomerState == true);
+            List<CompanyOne> listBiten = saleBiten.ToList<CompanyOne>();
 
-            foreach (ArventoSale item in listBiten)
+            foreach (CompanyOne item in listBiten)
             {
                 item.CustomerState = false;
                 db.Entry(item).State = EntityState.Modified;

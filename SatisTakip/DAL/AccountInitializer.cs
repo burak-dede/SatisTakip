@@ -1,11 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SatisTakip.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Security;
 
 namespace SatisTakip.DAL
 {
@@ -27,7 +23,7 @@ namespace SatisTakip.DAL
     {
         var store = new UserStore<ApplicationUser>(context);
         var manager = new UserManager<ApplicationUser>(store);
-        var user = new ApplicationUser { UserName = "admin", Email = "admin@ereltes.xyz" };
+        var user = new ApplicationUser { UserName = "admin", Email = "admin@companydomain.xyz" };
 
         manager.Create(user, "4qFew3%6");
         manager.AddToRole(user.Id, "Administrator");
